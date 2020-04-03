@@ -1,0 +1,2 @@
+
+let menuContainer=document.querySelector('.header_menu');let menu=document.querySelector('.header_menu_list');menuContainer.onmouseover=function(){menu.classList.remove('hidden');};menu.onmouseleave=function(){menu.classList.add('hidden');};

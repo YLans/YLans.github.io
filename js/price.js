@@ -1,0 +1,12 @@
+
+let calculateContainer=document.querySelector('.main_price .price_count')
+let range=calculateContainer.querySelector('.price_range');let btnArr=calculateContainer.querySelectorAll('.price_btn');let priceMeter=calculateContainer.querySelector('.price_result-meter');let resultPrice=calculateContainer.querySelector('.price_result_obj');range.onchange=function(){toggleSteps(this);showChosen(this.value);reloadPrice(this);exploreBtnArr();};btnArr.forEach(el=>{el.onmouseover=overBtn;el.onmouseleave=leaveBtn;el.onclick=function(){exploreBtnArr();addClass(el);calculatePrice();};});function exploreBtnArr(){for(let i=0;i<btnArr.length;i++){if(btnArr[i].classList[1]=='checked_btn'){removeClass(btnArr[i]);}}}
+function overBtn(){let btnText=this.textContent;let infoLight=calculateContainer.querySelector('.info_light');let infoMedium=calculateContainer.querySelector('.info_medium');let infoFull=calculateContainer.querySelector('.info_full');switch(btnText){case"Light":infoLight.classList.remove('hidden');break;case"Medium":infoMedium.classList.remove('hidden');break;case"Full":infoFull.classList.remove('hidden');break;}}
+function leaveBtn(){document.querySelectorAll('.price_info').forEach(el=>{el.classList.add('hidden');});}
+function addClass(btn){btn.classList.add('checked_btn');}
+function removeClass(btn){btn.classList.remove('checked_btn');}
+function showChosen(chosenValue){let resultValue=chosenValue.replace(/\B(?=(\d{3})+(?!\d))/g," ");let distinct=document.querySelector('.price_checked_area');distinct.innerHTML=resultValue;}
+function calculatePrice(){let value=Number(range.value);let averagePrice;for(let i=0;i<btnArr.length;i++){let btnText=btnArr[i].textContent;let btnClass=btnArr[i].classList[1];if(btnClass=='checked_btn'&&btnText=="Light"){fullPrice=value+5000;averagePrice=fullPrice/100;}else if(btnClass=='checked_btn'&&btnText=="Medium"){fullPrice=value+10000;averagePrice=fullPrice/100;}else if(btnClass=='checked_btn'&&btnText=="Full"){fullPrice=value+20000;averagePrice=fullPrice/100;}}
+let price=String(fullPrice);let average=String(averagePrice);resultPrice.innerHTML=price.replace(/\B(?=(\d{3})+(?!\d))/g," ")+' руб.';priceMeter.innerHTML=average.replace(/\B(?=(\d{3})+(?!\d))/g," ")+' руб.';}
+function reloadPrice(){resultPrice.innerHTML='Выберите тариф';priceMeter.innerHTML='Выберите тариф';}
+function toggleSteps(el){let meter=Number(el.value);if(meter<40000){el.value=100;}else if(meter>100&&meter<=170000){el.value=100000;}else if(meter>100000&&meter<370000){el.value=250000;}else{el.value=500000;}}
